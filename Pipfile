@@ -9,6 +9,7 @@ verify_ssl = true
 flask = "*"
 hagadias = {editable = true,git = "https://github.com/trashmonks/hagadias.git"}
 pyyaml = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.8"

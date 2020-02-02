@@ -1,5 +1,7 @@
 import yaml
+
 from flask import abort, Flask, jsonify
+from flask_cors import CORS
 from hagadias.gameroot import GameRoot
 
 
@@ -9,8 +11,10 @@ with open('config.yml') as f:
 
 gameroot = GameRoot(config['game_location'])
 qud_object_root, qindex = gameroot.get_object_tree()
+anatomies = gameroot.get_anatomies()
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/qud-api/objects', methods=['GET'])
@@ -42,6 +46,11 @@ def get_weapons():
         if item.inherits_from('MeleeWeapon') and item.tag_BaseObject is None:
             weapons.append(name)
     return jsonify(weapons)
+
+
+@app.route('/qud-api/anatomies', methods=['GET'])
+def get_anatomies():
+    return jsonify(anatomies)
 
 
 if __name__ == '__main__':
